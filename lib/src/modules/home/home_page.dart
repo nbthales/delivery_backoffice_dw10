@@ -32,12 +32,29 @@ class _HomePageState extends State<HomePage> with Loader, Messages {
       ),
       body: Container(
         child: Container(
-          color: context.colors.secundary,
-          width: context.percentWidth(.5),
-          height: context.percentHeight(.9),
-          child: Text(
-            'Texto extra bold',
-            style: context.textStyles.textTitle,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      label: Text('Login'),
+                    ),
+                    validator: (String) => 'Erro',
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 200,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Botão'),
+                ),
+              ),
+            ],
           ),
         ),
       ),
