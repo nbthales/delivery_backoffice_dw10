@@ -17,6 +17,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   awesome_snackbar_content: ^0.1.2
   dio: ^5.1.2
+  validatorless: ^1.2.3
 
 dev_dependencies:
   flutter_test:

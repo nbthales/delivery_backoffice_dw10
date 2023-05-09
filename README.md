@@ -1,6 +1,9 @@
 # delivery_backoffice_dw10
 
-Aula 1: `https://www.youtube.com/watch?v=pVgYy1zRfVc`
+## Aulas
+
+1. `https://www.youtube.com/watch?v=pVgYy1zRfVc`
+2. `https://www.youtube.com/watch?v=S-8Tm3xeuok`
 
 ## Pré requisitos
 
@@ -16,3 +19,5 @@ Baixar projeto backend: `git clone https://github.com/rodrigorahman/dw10_deliver
 Executar backend: `json_rest_server run`
 
 Verificar backend: `http://localhost:8080/products`
+
+Rodar mobx: `dart run build_runner watch -d`
