@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "9d06a322-ffca-439a-9b95-7d4ec77df650",
+		"name": "dw10_delivery_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14728810"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "/auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"nbthales@gmail.com\",\r\n    \"password\": \"Mudar123\",\r\n    \"admin\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
