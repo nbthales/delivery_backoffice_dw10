@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> with Loader, Messages {
             break;
           case LoginStateStatus.success:
             hideLoader();
-            Modular.to.navigate('/');
+            Modular.to.navigate('/home');
             break;
           case LoginStateStatus.error:
             hideLoader();
@@ -53,7 +53,15 @@ class _LoginPageState extends State<LoginPage> with Loader, Messages {
   void dispose() {
     emailEC.dispose();
     passwordEC.dispose();
+    statusReactionDisposer();
     super.dispose();
+  }
+
+  void _formSubmit() {
+    final formValid = formKey.currentState?.validate() ?? false;
+    if (formValid) {
+      controller.login(emailEC.text, passwordEC.text);
+    }
   }
 
   @override
@@ -124,6 +132,7 @@ class _LoginPageState extends State<LoginPage> with Loader, Messages {
                         ),
                         TextFormField(
                           controller: emailEC,
+                          onFieldSubmitted: (_) => _formSubmit(),
                           decoration: const InputDecoration(labelText: 'Email'),
                           validator: Validatorless.multiple([
                             Validatorless.required('E-mail obrigatório'),
@@ -135,6 +144,7 @@ class _LoginPageState extends State<LoginPage> with Loader, Messages {
                         ),
                         TextFormField(
                           controller: passwordEC,
+                          onFieldSubmitted: (_) => _formSubmit(),
                           obscureText: true,
                           decoration: const InputDecoration(labelText: 'Senha'),
                           validator:
@@ -147,13 +157,7 @@ class _LoginPageState extends State<LoginPage> with Loader, Messages {
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () {
-                              final formValid =
-                                  formKey.currentState?.validate() ?? false;
-                              if (formValid) {
-                                controller.login(emailEC.text, passwordEC.text);
-                              }
-                            },
+                            onPressed: _formSubmit,
                             child: const Text('Entrar'),
                           ),
                         ),
