@@ -12,6 +12,7 @@ enum PaymentTypeStateStatus {
   loaded,
   error,
   addOrUpdatePayment,
+  saved,
 }
 
 class PaymentTypeController = PaymentTypeControllerBase
@@ -30,15 +31,21 @@ abstract class PaymentTypeControllerBase with Store {
   String? _errorMessage;
 
   @readonly
+  bool? _filterEnabled;
+
+  @readonly
   PaymentTypeModel? _paymentTypeSelected;
 
   PaymentTypeControllerBase(this._paymentTypeRepository);
 
   @action
+  void changeFilter(bool? enabled) => _filterEnabled = enabled;
+
+  @action
   Future<void> loadPayments() async {
     try {
       _status = PaymentTypeStateStatus.loading;
-      _paymentTypes = await _paymentTypeRepository.findAll(null);
+      _paymentTypes = await _paymentTypeRepository.findAll(_filterEnabled);
       _status = PaymentTypeStateStatus.loaded;
     } catch (e, s) {
       log('Erro ao carregar as formas de pagamento', error: e, stackTrace: s);
@@ -60,5 +67,23 @@ abstract class PaymentTypeControllerBase with Store {
     await Future.delayed(Duration.zero);
     _paymentTypeSelected = payment;
     _status = PaymentTypeStateStatus.addOrUpdatePayment;
+  }
+
+  @action
+  Future<void> savePayment({
+    int? id,
+    required String name,
+    required String acronym,
+    required bool enabled,
+  }) async {
+    _status = PaymentTypeStateStatus.loading;
+    final paymentTypeModel = PaymentTypeModel(
+      id: id,
+      name: name,
+      acronym: acronym,
+      enabled: enabled,
+    );
+    await _paymentTypeRepository.save(paymentTypeModel);
+    _status = PaymentTypeStateStatus.saved;
   }
 }

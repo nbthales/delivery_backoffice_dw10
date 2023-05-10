@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../core/ui/helpers/loader.dart';
 import '../../core/ui/helpers/messages.dart';
 import 'payment_type_controller.dart';
+import 'widgets/paymentTypeForm/payment_type_form_modal.dart';
 import 'widgets/payment_type_header.dart';
 import 'widgets/payment_type_item.dart';
 
@@ -25,6 +26,10 @@ class _PaymentTypePageState extends State<PaymentTypePage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final filterDisposer = reaction((_) => controller.filterEnabled, (_) {
+        controller.loadPayments();
+      });
+
       final statusDisposer = reaction((_) => controller.status, (status) {
         switch (status) {
           case PaymentTypeStateStatus.initial:
@@ -45,11 +50,24 @@ class _PaymentTypePageState extends State<PaymentTypePage>
             hideLoader();
             showAddOrUpdatePayment();
             break;
+          case PaymentTypeStateStatus.saved:
+            hideLoader();
+            Navigator.of(context, rootNavigator: true).pop();
+            controller.loadPayments();
+            break;
         }
       });
-      disposers.addAll([statusDisposer]);
+      disposers.addAll([statusDisposer, filterDisposer]);
       controller.loadPayments();
     });
+  }
+
+  @override
+  void dispose() {
+    for (final dispose in disposers) {
+      dispose();
+    }
+    super.dispose();
   }
 
   void showAddOrUpdatePayment() {
@@ -64,7 +82,10 @@ class _PaymentTypePageState extends State<PaymentTypePage>
             ),
             backgroundColor: Colors.white,
             elevation: 10,
-            child: const Text('MODALX'),
+            child: PaymentTypeFormModal(
+              model: controller.paymentTypeSelected,
+              controller: controller,
+            ),
           ),
         );
       },
