@@ -19,6 +19,7 @@ dependencies:
   dio: ^5.1.2
   validatorless: ^1.2.3
   flutter_mobx: ^2.0.6+5
+  brasil_fields: ^1.9.1
 
 dev_dependencies:
   flutter_test:
