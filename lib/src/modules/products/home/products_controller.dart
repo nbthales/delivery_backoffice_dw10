@@ -29,6 +29,11 @@ abstract class ProductsControllerBase with Store {
   @readonly
   String? _filterName;
 
+  Future<void> filterByName(String name) async {
+    _filterName = name;
+    await loadProducts();
+  }
+
   @action
   Future<void> loadProducts() async {
     try {
