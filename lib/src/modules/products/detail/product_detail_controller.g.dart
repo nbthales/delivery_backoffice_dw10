@@ -63,6 +63,16 @@ mixin _$ProductDetailController on ProductDetailControllerBase, Store {
     });
   }
 
+  late final _$uploadImageProductAsyncAction = AsyncAction(
+      'ProductDetailControllerBase.uploadImageProduct',
+      context: context);
+
+  @override
+  Future<void> uploadImageProduct(Uint8List file, String fileName) {
+    return _$uploadImageProductAsyncAction
+        .run(() => super.uploadImageProduct(file, fileName));
+  }
+
   @override
   String toString() {
     return '''
