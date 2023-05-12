@@ -41,7 +41,14 @@ class _ProductsPageState extends State<ProductsPage> with Loader, Messages {
             break;
           case ProductStateStatus.addOrUpdateProduct:
             hideLoader();
-            await Modular.to.pushNamed('/products/detail');
+            final productSelected = controller.productSelected;
+            var uri = '/products/detail';
+
+            if (productSelected != null) {
+              uri += '?id=${productSelected.id}';
+            }
+
+            await Modular.to.pushNamed(uri);
             controller.loadProducts();
             break;
         }

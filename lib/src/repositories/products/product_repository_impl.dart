@@ -69,9 +69,9 @@ class ProductRepositoryImpl implements ProductRepository {
       final data = productModel.toMap();
 
       if (productModel.id != null) {
-        await client.put('products/${productModel.id}', data: data);
+        await client.put('/products/${productModel.id}', data: data);
       } else {
-        await client.post('products', data: data);
+        await client.post('/products', data: data);
       }
     } on DioError catch (e, s) {
       log('Erro ao salvar produto', error: e, stackTrace: s);
