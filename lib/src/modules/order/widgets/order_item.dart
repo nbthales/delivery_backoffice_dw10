@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../core/ui/styles/text_styles.dart';
+import '../../../core/ui/styles/text_styles.dart';
+import '../../../models/orders/order_model.dart';
 
 class OrderItem extends StatelessWidget {
-  const OrderItem({super.key});
+  final OrderModel order;
+  const OrderItem({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
