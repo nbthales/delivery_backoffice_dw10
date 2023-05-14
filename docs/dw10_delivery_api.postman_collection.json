@@ -24,6 +24,64 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"rodrigorahman@academiadoflutter.com.br\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login adm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.globals.set(\"access_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -42,6 +100,55 @@
 							],
 							"path": [
 								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh_token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.globals.set(\"access_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODEwMzUzNjgsImlhdCI6MTY4MDQzMDU2OCwiaXNzIjoiZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmhaRzBpT25SeWRXVXNJbVY0Y0NJNk1UWTRNRFF6TkRFMk9Dd2lhV0YwSWpveE5qZ3dORE13TlRZNExDSnBjM01pT2lKcWMyOXVYM0psYzNSZmMyVnlkbVZ5SWl3aWJtSm1Jam94Tmpnd05ETXdOVFk0TENKemRXSWlPaUl3SW4wLm11S0RpYkR5d3lId3FUX280ZTY5TU51UlZWWVhoYUJ2M095dDlFMlpVWkUiLCJuYmYiOjE2ODA0MzA1NjgsInN1YiI6IlJlZnJlc2hUb2tlbiJ9.HlDg6eSb-bUzysyJOpRl4eMLowcvEXxElZUsJjQs05w\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/refresh",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
 							]
 						}
 					},
@@ -211,6 +318,53 @@
 							],
 							"path": [
 								"payment-types"
+							],
+							"query": [
+								{
+									"key": "enabled",
+									"value": "false",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment-types by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Vale Alimentação\",\r\n    \"acronym\": \"VA\",\r\n    \"enabled\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/payment-types/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"payment-types",
+								"1"
 							]
 						}
 					},
@@ -252,6 +406,43 @@
 							],
 							"path": [
 								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/rodri/Downloads/leia a legenda.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/uploads",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"uploads"
 							]
 						}
 					},
@@ -355,7 +546,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"products\": [\r\n        {\r\n            \"id\": 1,\r\n            \"amount\": 2,\r\n            \"total_price\": 38.00\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"amount\": 1,\r\n            \"total_price\": 19.00\r\n        }\r\n    ],\r\n    \"user_id\": \"#userAuthRef\",\r\n    \"address\": \"Av Paulista, 51 São Paulo\",\r\n    \"CPF\": 1234156464,\r\n    \"payment_method_id\": 1\r\n}",
+							"raw": " {\r\n        \"date\": \"2023-05-02T00:00:00.000\",\r\n        \"status\": \"P\",\r\n        \"products\": [\r\n            {\r\n                \"id\": 1,\r\n                \"amount\": 2,\r\n                \"total_price\": 38.0\r\n            },\r\n            {\r\n                \"id\": 2,\r\n                \"amount\": 1,\r\n                \"total_price\": 19.0\r\n            }\r\n        ],\r\n        \"user_id\": 2,\r\n        \"address\": \"Av Paulista, 51 São Paulo\",\r\n        \"CPF\": 1234156464,\r\n        \"payment_method_id\": 1\r\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -414,7 +605,89 @@
 					"response": []
 				},
 				{
-					"name": "Product Edit",
+					"name": "Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Porção de 500g Calabresa acebolada\",\r\n    \"description\": \"\",\r\n    \"price\": 19.0,\r\n    \"image_path\": \"https://www.anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-1682-52acab79d88efd805e6a341697e6aecb.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/orders/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Orders data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Porção de 500g Calabresa acebolada\",\r\n    \"description\": \"\",\r\n    \"price\": 19.0,\r\n    \"image_path\": \"https://www.anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-1682-52acab79d88efd805e6a341697e6aecb.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/orders?date=2023-04-25T00%3A00%3A00.000",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"orders"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2023-04-25T00%3A00%3A00.000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order Edit",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -430,7 +703,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"X-Churrasco\",\r\n    \"description\": \"Lanche acompanha pão francês, contra filé, alface, vinagrete, queijo e maionese\",\r\n    \"price\": 23.0,\r\n    \"image_path\": \"http://www.saboresajinomoto.com.br/uploads/images/recipes/sanduiche-de-churrasco.jpg\"\r\n}",
+							"raw": "{\r\n    \"status\": \"P\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -438,13 +711,46 @@
 							}
 						},
 						"url": {
-							"raw": "{{localhost}}/products/3",
+							"raw": "{{localhost}}/orders/3",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
-								"products",
+								"orders",
 								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "ById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/2",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"2"
 							]
 						}
 					},
