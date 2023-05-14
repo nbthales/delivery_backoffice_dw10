@@ -1,4 +1,5 @@
 # delivery_backoffice_dw10
+![project_preview](docs/project_preview.gif)
 
 ## Aulas
 
