@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../core/ui/helpers/loader.dart';
 import '../../core/ui/helpers/messages.dart';
+import 'detail/order_detail_modal.dart';
 import 'order_controller.dart';
 import 'widgets/order_item.dart';
 import 'widgets/order_header.dart';
@@ -37,10 +39,23 @@ class _OrderPageState extends State<OrderPage> with Loader, Messages {
             hideLoader();
             showError(controller.errorMessage ?? 'Erro interno');
             break;
+          case OrderStateStatus.showDetailModal:
+            hideLoader();
+            showOrderDetail();
+            break;
         }
       });
       controller.findOrders();
     });
+  }
+
+  void showOrderDetail() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const OrderDetailModal();
+      },
+    );
   }
 
   @override
@@ -62,14 +77,19 @@ class _OrderPageState extends State<OrderPage> with Loader, Messages {
                 height: 50,
               ),
               Expanded(
-                child: GridView.builder(
-                  itemCount: controller.orders.length,
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    mainAxisExtent: 91,
-                    maxCrossAxisExtent: 600,
-                  ),
-                  itemBuilder: (context, index) {
-                    return OrderItem(order: controller.orders[index]);
+                child: Observer(
+                  builder: (context) {
+                    return GridView.builder(
+                      itemCount: controller.orders.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        mainAxisExtent: 91,
+                        maxCrossAxisExtent: 600,
+                      ),
+                      itemBuilder: (context, index) {
+                        return OrderItem(order: controller.orders[index]);
+                      },
+                    );
                   },
                 ),
               ),

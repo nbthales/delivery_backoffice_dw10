@@ -43,7 +43,7 @@ class OrderModel {
       date: DateTime.parse((map['date'])),
       status: OrderStatus.parse(map['status']),
       orderProducts: List<OrderProductModel>.from(
-        (map['products'] as List<int>).map<OrderProductModel>(
+        (map['products']).map<OrderProductModel>(
           (x) => OrderProductModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
