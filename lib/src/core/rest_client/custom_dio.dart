@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/browser.dart';
 import 'package:dio/dio.dart';
 
@@ -28,7 +30,10 @@ class CustomDio extends DioForBrowser {
   }
 
   CustomDio auth() {
-    interceptors.add(_authInterceptor);
+    log('interceptors: ${interceptors.length}');
+    if (!interceptors.contains(_authInterceptor)) {
+      interceptors.add(_authInterceptor);
+    }
     return this;
   }
 
